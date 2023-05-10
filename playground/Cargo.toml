@@ -7,4 +7,8 @@ license = "MIT"
 
 [dependencies]
 common = { path = "../common" }
+env_logger = "0.10.0"
+log = "0.4.17"
 renderer = { path = "../renderer" }
+wgpu = "0.16.0"
+winit = "0.28.5"
