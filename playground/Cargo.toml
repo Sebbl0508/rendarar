@@ -1,0 +1,10 @@
+[package]
+name = "playground"
+version = "0.0.0"
+authors = ["Sebbl0508"]
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+common = { path = "../common" }
+renderer = { path = "../renderer" }

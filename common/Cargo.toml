@@ -1,0 +1,9 @@
+[package]
+name = "common"
+description = "Common Code between workspaces"
+authors = ["Sebbl0508"]
+license = "MIT"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
