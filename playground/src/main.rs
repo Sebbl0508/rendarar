@@ -1,4 +1,6 @@
-use renderer::Game;
+mod game;
+
+use game::Game;
 use winit::event_loop::EventLoop;
 use winit::window::WindowBuilder;
 

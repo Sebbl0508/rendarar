@@ -12,3 +12,4 @@ log = "0.4.17"
 renderer = { path = "../renderer" }
 wgpu = "0.16.0"
 winit = "0.28.5"
+beul = "1.0.0"

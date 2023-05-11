@@ -1257,6 +1257,7 @@ checksum = "26072860ba924cbfa98ea39c8c19b4dd6a4a25423dbdf219c1eca91aa0cf6964"
 name = "playground"
 version = "0.0.0"
 dependencies = [
+ "beul",
  "common",
  "env_logger",
  "log",
@@ -1400,7 +1401,6 @@ checksum = "216080ab382b992234dda86873c18d4c48358f5cfcb70fd693d7f6f2131b628b"
 name = "renderer"
 version = "0.0.0"
 dependencies = [
- "beul",
  "bytemuck",
  "cgmath",
  "common",

@@ -1,4 +1,4 @@
-use crate::wgpu::WgpuContext;
+use renderer::wgpu::WgpuContext;
 use std::error::Error;
 use winit::event::{Event, WindowEvent};
 use winit::event_loop::{ControlFlow, EventLoop};
