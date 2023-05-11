@@ -7,7 +7,7 @@ use winit::window::WindowBuilder;
 fn main() {
     // If log level not set in env variable, set it to debug
     if std::env::var("RUST_LOG").is_err() {
-        std::env::set_var("RUST_LOG", "debug");
+        std::env::set_var("RUST_LOG", "debug,wgpu_core=info");
     }
 
     env_logger::init();

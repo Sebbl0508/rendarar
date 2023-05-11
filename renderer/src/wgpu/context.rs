@@ -104,6 +104,10 @@ impl WgpuContext {
         &self.depth_buffer
     }
 
+    pub fn surface_size(&self) -> winit::dpi::PhysicalSize<u32> {
+        self.window_size
+    }
+
     pub fn resize(&mut self, new_size: winit::dpi::PhysicalSize<u32>) {
         if new_size.width > 0 && new_size.height > 0 {
             self.surface_config.width = new_size.width;
