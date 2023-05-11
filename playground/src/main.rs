@@ -21,7 +21,7 @@ fn setup() -> Game {
     let window = WindowBuilder::new()
         .with_title("WGPU Playground")
         .with_fullscreen(None)
-        .with_resizable(false)
+        .with_resizable(true)
         .build(&event_loop)
         .unwrap();
 
