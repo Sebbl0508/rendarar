@@ -1,4 +1,5 @@
 mod game;
+mod triangle;
 
 use game::Game;
 use winit::event_loop::EventLoop;

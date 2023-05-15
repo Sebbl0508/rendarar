@@ -1,6 +1,8 @@
 use crate::wgpu::shader::Shader;
 use crate::wgpu::{Texture, WgpuContext};
 
+// TODO: Struct for configuring pipeline (with most settings having a default implemented)
+
 pub enum ShaderSource<'a> {
     SourceCode(&'a str),
     Module(wgpu::ShaderModule),
@@ -14,7 +16,12 @@ pub struct RenderPipeline {
 }
 
 impl RenderPipeline {
-    pub fn new(ctx: &WgpuContext, shader: ShaderSource, label: Option<&str>) -> Self {
+    pub fn new<'a>(
+        ctx: &WgpuContext,
+        shader: ShaderSource,
+        buffers: &'a [wgpu::VertexBufferLayout<'a>],
+        label: Option<&str>,
+    ) -> Self {
         let shader_label = label.map(|lbl| format!("shader for pipeline {lbl}"));
         let shader = match shader {
             ShaderSource::SourceCode(src) => {
@@ -40,7 +47,7 @@ impl RenderPipeline {
                 vertex: wgpu::VertexState {
                     module: shader.raw(),
                     entry_point: shader.vertex_entry(),
-                    buffers: &[],
+                    buffers,
                 },
                 fragment: Some(wgpu::FragmentState {
                     module: shader.raw(),

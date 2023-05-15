@@ -1,3 +1,4 @@
+use crate::triangle::Triangle;
 use renderer::wgpu::WgpuContext;
 use std::error::Error;
 use winit::event::{Event, WindowEvent};
@@ -8,6 +9,8 @@ pub struct Game {
     ctx: WgpuContext,
     window: Window,
     event_loop: Option<EventLoop<()>>,
+
+    triangle: Triangle,
 }
 
 impl Game {
@@ -15,10 +18,14 @@ impl Game {
         let ctx = beul::execute(WgpuContext::new(&window))?;
         log::info!("initialized wgpu");
 
+        let triangle = Triangle::new(&ctx);
+
         Ok(Self {
             ctx,
             window,
             event_loop: Some(event_loop),
+
+            triangle,
         })
     }
 
@@ -61,6 +68,8 @@ impl Game {
                     stencil_ops: None,
                 }),
             });
+
+            self.triangle.render(&mut main_pass);
         }
 
         self.ctx.queue().submit(Some(encoder.finish()));
