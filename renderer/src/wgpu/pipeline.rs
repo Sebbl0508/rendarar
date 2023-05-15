@@ -8,6 +8,7 @@ pub enum ShaderSource<'a> {
 }
 
 pub struct RenderPipeline {
+    raw: wgpu::RenderPipeline,
     layout: wgpu::PipelineLayout,
     shader: Shader,
 }
@@ -74,6 +75,22 @@ impl RenderPipeline {
                 multiview: None,
             });
 
-        todo!()
+        Self {
+            raw: pipeline,
+            layout,
+            shader,
+        }
+    }
+
+    pub fn raw(&self) -> &wgpu::RenderPipeline {
+        &self.raw
+    }
+
+    pub fn layout(&self) -> &wgpu::PipelineLayout {
+        &self.layout
+    }
+
+    pub fn shader(&self) -> &Shader {
+        &self.shader
     }
 }

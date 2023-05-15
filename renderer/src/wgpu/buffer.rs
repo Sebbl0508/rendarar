@@ -53,4 +53,8 @@ impl Buffer {
     pub fn usages(&self) -> wgpu::BufferUsages {
         self.usages
     }
+
+    pub fn raw(&self) -> &wgpu::Buffer {
+        &self.raw
+    }
 }
