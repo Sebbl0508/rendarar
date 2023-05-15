@@ -8,3 +8,4 @@ pub use context::WgpuContext;
 pub use pipeline::{RenderPipeline, ShaderSource};
 pub use shader::Shader;
 pub use texture::Texture;
+pub use buffer::Buffer;
