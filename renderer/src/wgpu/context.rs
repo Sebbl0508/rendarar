@@ -1,4 +1,4 @@
-use crate::wgpu::Texture;
+use crate::wgpu::{Texture, WgpuError};
 use std::error::Error;
 use winit::window::Window;
 
@@ -16,7 +16,7 @@ pub struct WgpuContext {
 }
 
 impl WgpuContext {
-    pub async fn new(window: &Window) -> Result<Self, Box<dyn Error>> {
+    pub async fn new(window: &Window) -> Result<Self, WgpuError> {
         let window_size = window.inner_size();
 
         let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
@@ -32,7 +32,7 @@ impl WgpuContext {
                 force_fallback_adapter: false,
             })
             .await
-            .unwrap(); // TODO: Use custom error
+            .ok_or(WgpuError::NoFittingAdapterFound)?;
 
         let (device, queue) = adapter
             .request_device(
