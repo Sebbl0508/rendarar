@@ -1,3 +1,4 @@
+use crate::wgpu::Texture;
 use std::error::Error;
 use winit::window::Window;
 
@@ -9,6 +10,9 @@ pub struct WgpuContext {
     surface_capabilities: wgpu::SurfaceCapabilities,
     surface_config: wgpu::SurfaceConfiguration,
     window_size: winit::dpi::PhysicalSize<u32>,
+
+    // TODO: Move this into camera probably (every camera has optional depth buffer ?)
+    depth_buffer: Texture,
 }
 
 impl WgpuContext {
@@ -61,6 +65,9 @@ impl WgpuContext {
 
         surface.configure(&device, &surface_config);
 
+        let depth_buffer =
+            Texture::create_depth_texture(&device, &surface_config, Some("main depth buffer"));
+
         Ok(Self {
             device,
             adapter,
@@ -69,6 +76,7 @@ impl WgpuContext {
             surface_capabilities,
             surface_config,
             window_size,
+            depth_buffer,
         })
     }
 
@@ -92,11 +100,22 @@ impl WgpuContext {
         &self.surface_capabilities
     }
 
+    pub fn depth_buffer(&self) -> &Texture {
+        &self.depth_buffer
+    }
+
     pub fn resize(&mut self, new_size: winit::dpi::PhysicalSize<u32>) {
         if new_size.width > 0 && new_size.height > 0 {
             self.surface_config.width = new_size.width;
             self.surface_config.height = new_size.height;
             self.surface.configure(&self.device, &self.surface_config);
+
+            // recreate depth buffer
+            self.depth_buffer = Texture::create_depth_texture(
+                self.device(),
+                self.surface_config(),
+                Some("main depth buffer"),
+            );
 
             self.window_size = new_size;
         }
