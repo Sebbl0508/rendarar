@@ -1,6 +1,8 @@
 use crate::wgpu::shader::Shader;
 use crate::wgpu::{Texture, WgpuContext};
 
+// TODO: Struct for configuring pipeline (with most settings having a default implemented)
+
 pub enum ShaderSource<'a> {
     SourceCode(&'a str),
     Module(wgpu::ShaderModule),
@@ -8,12 +10,18 @@ pub enum ShaderSource<'a> {
 }
 
 pub struct RenderPipeline {
+    raw: wgpu::RenderPipeline,
     layout: wgpu::PipelineLayout,
     shader: Shader,
 }
 
 impl RenderPipeline {
-    pub fn new(ctx: &WgpuContext, shader: ShaderSource, label: Option<&str>) -> Self {
+    pub fn new<'a>(
+        ctx: &WgpuContext,
+        shader: ShaderSource,
+        buffers: &'a [wgpu::VertexBufferLayout<'a>],
+        label: Option<&str>,
+    ) -> Self {
         let shader_label = label.map(|lbl| format!("shader for pipeline {lbl}"));
         let shader = match shader {
             ShaderSource::SourceCode(src) => {
@@ -39,7 +47,7 @@ impl RenderPipeline {
                 vertex: wgpu::VertexState {
                     module: shader.raw(),
                     entry_point: shader.vertex_entry(),
-                    buffers: &[],
+                    buffers,
                 },
                 fragment: Some(wgpu::FragmentState {
                     module: shader.raw(),
@@ -74,6 +82,22 @@ impl RenderPipeline {
                 multiview: None,
             });
 
-        todo!()
+        Self {
+            raw: pipeline,
+            layout,
+            shader,
+        }
+    }
+
+    pub fn raw(&self) -> &wgpu::RenderPipeline {
+        &self.raw
+    }
+
+    pub fn layout(&self) -> &wgpu::PipelineLayout {
+        &self.layout
+    }
+
+    pub fn shader(&self) -> &Shader {
+        &self.shader
     }
 }
