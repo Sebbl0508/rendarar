@@ -1,4 +1,4 @@
-use crate::camera::{Camera, Camera3D, Projection};
+use crate::camera::{Camera, Projection};
 use bytemuck::{Pod, Zeroable};
 use cgmath::{Matrix4, SquareMatrix};
 

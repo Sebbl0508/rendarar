@@ -1,5 +1,5 @@
 use crate::wgpu::{Texture, WgpuError};
-use std::error::Error;
+
 use winit::window::Window;
 
 pub struct WgpuContext {
