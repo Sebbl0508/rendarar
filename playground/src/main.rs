@@ -13,7 +13,7 @@ fn main() {
 
     env_logger::init();
 
-    let mut game = setup();
+    let game = setup();
 
     game.run();
 }
