@@ -1,5 +1,6 @@
 use bytemuck::{Pod, Zeroable};
-use renderer::wgpu::{Buffer, RenderPipeline, ShaderSource, Vertex, WgpuContext};
+use wgpu::util::DeviceExt;
+use renderer::wgpu::{RenderPipeline, ShaderSource, Vertex, WgpuContext};
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy, Pod, Zeroable)]
@@ -11,7 +12,7 @@ pub struct TriangleVertex {
 
 pub struct Triangle {
     pipeline: RenderPipeline,
-    vtx_buf: Buffer,
+    vtx_buf: wgpu::Buffer,
 }
 
 impl Triangle {
@@ -30,19 +31,18 @@ impl Triangle {
             Some("simple triangle pipeline"),
         );
 
-        let vtx_buf = Buffer::new_init(
-            ctx.device(),
-            bytemuck::cast_slice(Self::VERTICES),
-            wgpu::BufferUsages::VERTEX,
-            Some("triangle vertex buffer"),
-        );
+        let vtx_buf = ctx.device().create_buffer_init(&wgpu::util::BufferInitDescriptor {
+            label: Some("triangle vertex buffer"),
+            usage: wgpu::BufferUsages::VERTEX,
+            contents: bytemuck::cast_slice(Self::VERTICES),
+        });
 
         Self { pipeline, vtx_buf }
     }
 
     pub fn render<'a>(&'a self, rpass: &mut wgpu::RenderPass<'a>) {
         rpass.set_pipeline(self.pipeline.raw());
-        rpass.set_vertex_buffer(0, self.vtx_buf.raw().slice(..));
+        rpass.set_vertex_buffer(0, self.vtx_buf.slice(..));
 
         rpass.draw(0..3, 0..1);
     }
