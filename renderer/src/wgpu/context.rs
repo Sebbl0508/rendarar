@@ -38,7 +38,7 @@ impl WgpuContext {
             .request_device(
                 &wgpu::DeviceDescriptor {
                     label: Some("primary render device"),
-                    features: wgpu::Features::empty(),
+                    features: wgpu::Features::PUSH_CONSTANTS,
                     limits: wgpu::Limits::default(),
                 },
                 None,
