@@ -1,6 +1,6 @@
 use bytemuck::{Pod, Zeroable};
-use wgpu::util::DeviceExt;
 use renderer::wgpu::{RenderPipeline, ShaderSource, Vertex, WgpuContext};
+use wgpu::util::DeviceExt;
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy, Pod, Zeroable)]
@@ -31,11 +31,13 @@ impl Triangle {
             Some("simple triangle pipeline"),
         );
 
-        let vtx_buf = ctx.device().create_buffer_init(&wgpu::util::BufferInitDescriptor {
-            label: Some("triangle vertex buffer"),
-            usage: wgpu::BufferUsages::VERTEX,
-            contents: bytemuck::cast_slice(Self::VERTICES),
-        });
+        let vtx_buf = ctx
+            .device()
+            .create_buffer_init(&wgpu::util::BufferInitDescriptor {
+                label: Some("triangle vertex buffer"),
+                usage: wgpu::BufferUsages::VERTEX,
+                contents: bytemuck::cast_slice(Self::VERTICES),
+            });
 
         Self { pipeline, vtx_buf }
     }

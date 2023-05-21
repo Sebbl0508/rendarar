@@ -1,11 +1,12 @@
 use crate::camera::Camera;
+use cgmath::num_traits::real::Real;
 use cgmath::{InnerSpace, Matrix4, Point3, Rad, Vector3};
 
 #[derive(Debug)]
 pub struct Camera3D {
     pub position: Point3<f32>,
-    yaw: Rad<f32>,
-    pitch: Rad<f32>,
+    pub yaw: Rad<f32>,
+    pub pitch: Rad<f32>,
 }
 
 impl Camera3D {
@@ -20,6 +21,14 @@ impl Camera3D {
             yaw: yaw.into(),
             pitch: pitch.into(),
         }
+    }
+
+    pub fn look_at(&mut self, point: Point3<f32>) {
+        let dir = (point - self.position).normalize();
+
+        // TODO: Find out if the resulting values are actually 'Deg'
+        self.pitch = Rad(dir.y.asin());
+        self.yaw = Rad(dir.x.atan2(dir.z));
     }
 }
 

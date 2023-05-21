@@ -22,6 +22,21 @@ impl Projection {
         }
     }
 
+    pub fn set_fovy<F>(&mut self, fovy: F)
+    where
+        F: Into<Rad<f32>>,
+    {
+        self.fovy = fovy.into();
+    }
+
+    pub fn set_znear(&mut self, znear: f32) {
+        self.znear = znear;
+    }
+
+    pub fn set_zfar(&mut self, zfar: f32) {
+        self.zfar = zfar;
+    }
+
     pub fn resize(&mut self, width: u32, height: u32) {
         self.aspect = width as f32 / height as f32;
     }
