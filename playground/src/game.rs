@@ -20,7 +20,7 @@ impl Game {
         let ctx = beul::execute(WgpuContext::new(&window))?;
         log::info!("initialized wgpu");
 
-        let camera = FirstPersonController::new(ctx.surface_size());
+        let camera = FirstPersonController::new(&ctx, ctx.surface_size());
         let triangle = Triangle::new(&ctx);
 
         Ok(Self {

@@ -17,7 +17,7 @@ pub struct CameraBundle3D {
 }
 
 impl CameraBundle3D {
-    pub const fn new(options: CameraOptions3D, screen_size: winit::dpi::PhysicalSize<u32>) -> Self {
+    pub fn new(options: CameraOptions3D, screen_size: winit::dpi::PhysicalSize<u32>) -> Self {
         let CameraOptions3D {
             position,
             fovy,
@@ -58,7 +58,7 @@ impl Default for CameraOptions3D {
     fn default() -> Self {
         Self {
             position: Point3::new(0.0, 0.0, 0.0),
-            znear: 0.0,
+            znear: 1.0,
             zfar: 1000.0,
             fovy: Deg(60.0),
             yaw: Rad(0.0),
