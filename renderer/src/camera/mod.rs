@@ -7,6 +7,7 @@ mod uniform;
 
 pub use camera3d::Camera3D;
 pub use projection::Projection;
+pub use uniform::CameraUniform;
 
 pub trait Camera {
     fn position(&self) -> Point3<f32>;
