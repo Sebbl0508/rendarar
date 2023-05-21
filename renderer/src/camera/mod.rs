@@ -4,10 +4,12 @@ use std::f32::consts::FRAC_2_PI;
 mod camera3d;
 mod projection;
 mod uniform;
+mod utils;
 
 pub use camera3d::Camera3D;
 pub use projection::Projection;
 pub use uniform::CameraUniform;
+pub use utils::CameraBundle3D;
 
 pub trait Camera {
     fn position(&self) -> Point3<f32>;
