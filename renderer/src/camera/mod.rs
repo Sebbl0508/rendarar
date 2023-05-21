@@ -9,7 +9,7 @@ mod utils;
 pub use camera3d::Camera3D;
 pub use projection::Projection;
 pub use uniform::CameraUniform;
-pub use utils::CameraBundle3D;
+pub use utils::{CameraBundle3D, CameraOptions3D};
 
 pub trait Camera {
     fn position(&self) -> Point3<f32>;
