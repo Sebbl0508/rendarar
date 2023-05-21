@@ -1,3 +1,4 @@
+use crate::camera::FirstPersonController;
 use crate::triangle::Triangle;
 use renderer::wgpu::WgpuContext;
 use std::error::Error;
@@ -10,6 +11,7 @@ pub struct Game {
     window: Window,
     event_loop: Option<EventLoop<()>>,
 
+    camera: FirstPersonController,
     triangle: Triangle,
 }
 
@@ -18,6 +20,7 @@ impl Game {
         let ctx = beul::execute(WgpuContext::new(&window))?;
         log::info!("initialized wgpu");
 
+        let camera = FirstPersonController::new(ctx.surface_size());
         let triangle = Triangle::new(&ctx);
 
         Ok(Self {
@@ -26,6 +29,7 @@ impl Game {
             event_loop: Some(event_loop),
 
             triangle,
+            camera,
         })
     }
 
@@ -80,6 +84,7 @@ impl Game {
 
     pub fn resize(&mut self, new_size: winit::dpi::PhysicalSize<u32>) {
         self.ctx.resize(new_size);
+        self.camera.resize(new_size);
     }
 
     pub fn run(mut self) {

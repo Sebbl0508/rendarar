@@ -1,3 +1,4 @@
+mod camera;
 mod game;
 mod triangle;
 

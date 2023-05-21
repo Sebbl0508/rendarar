@@ -1259,6 +1259,7 @@ version = "0.0.0"
 dependencies = [
  "beul",
  "bytemuck",
+ "cgmath",
  "common",
  "env_logger",
  "log",
