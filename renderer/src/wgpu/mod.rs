@@ -4,6 +4,7 @@ mod pipeline;
 mod shader;
 mod texture;
 mod vertex;
+mod uniform;
 
 pub use context::WgpuContext;
 pub use error::WgpuError;
