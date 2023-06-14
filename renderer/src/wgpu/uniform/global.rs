@@ -38,13 +38,56 @@ impl Globals {
                 frames: 0,
                 view_matrix: Self::calc_view_matrix(screen_size).into(),
                 __padding: 0,
-            }])
+            }]),
         });
+
+        let bindgroup_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+            label: Some("global bindgroup layout"),
+            entries: &Self::bindgroup_layout_entries(),
+        });
+
+        let bindgroup = device.create_bind_group(&wgpu::BindGroupDescriptor {
+            label: Some("global bindgroup"),
+            layout: &bindgroup_layout,
+            entries: &[wgpu::BindGroupEntry {
+                binding: 0,
+                resource: buffer.as_entire_binding(),
+            }],
+        });
+
+        Self {
+            buffer,
+            bindgroup,
+            bindgroup_layout,
+        }
     }
 
-    pub fn update(&self, screen_size: winit::dpi::PhysicalSize<u32>, time: f32, dt: f32, frames: u32) {
+    fn bindgroup_layout_entries() -> [wgpu::BindGroupLayoutEntry; 1] {
+        [wgpu::BindGroupLayoutEntry {
+            binding: 0,
+            ty: wgpu::BindingType::Buffer {
+                ty: wgpu::BufferBindingType::Uniform,
+                min_binding_size: None,
+                has_dynamic_offset: false,
+            },
+            count: None,
+            visibility: wgpu::ShaderStages::VERTEX | wgpu::ShaderStages::FRAGMENT,
+        }]
+    }
+
+    pub fn update(
+        &self,
+        screen_size: winit::dpi::PhysicalSize<u32>,
+        time: f32,
+        dt: f32,
+        frames: u32,
+    ) {
         let uniform = GlobalsUniform {
-            time, dt, frames, view_matrix: Self::calc_view_matrix(screen_size).into(), __padding,
+            time,
+            dt,
+            frames,
+            view_matrix: Self::calc_view_matrix(screen_size).into(),
+            __padding: 0,
         };
 
         todo!()

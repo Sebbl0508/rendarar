@@ -3,8 +3,8 @@ mod error;
 mod pipeline;
 mod shader;
 mod texture;
-mod vertex;
 mod uniform;
+mod vertex;
 
 pub use context::WgpuContext;
 pub use error::WgpuError;

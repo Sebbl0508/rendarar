@@ -8,7 +8,6 @@ pub struct Uniforms {
     global: Globals,
 }
 
-
 impl Uniforms {
     pub fn new(ctx: &WgpuContext) -> Self {
         Self {
