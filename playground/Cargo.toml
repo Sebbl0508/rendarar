@@ -8,10 +8,10 @@ license = "MIT"
 [dependencies]
 common = { path = "../common" }
 env_logger = "0.10.0"
-log = "0.4.17"
 renderer = { path = "../renderer" }
-wgpu = "0.16.0"
-winit = "0.28.5"
 beul = "1.0.0"
-bytemuck = { version = "1.13.1", features = ["derive"] }
 cgmath = "0.18.0"
+log = { workspace = true }
+wgpu = { workspace = true }
+winit = { workspace = true }
+bytemuck = { workspace = true, features = ["derive"] }

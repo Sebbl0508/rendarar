@@ -6,12 +6,12 @@ edition = "2021"
 license = "MIT"
 
 [dependencies]
-bytemuck = { version = "1.13.1", features = ["derive"] }
 cgmath = "0.18.0"
-log = "0.4.17"
-wgpu = "0.16.0"
-winit = "0.28.5"
 thiserror = "1.0.40"
 image = "0.24.6"
+log = { workspace = true }
+wgpu = { workspace = true }
+winit = { workspace = true }
+bytemuck = { workspace = true, features = ["derive"] }
 
 common = { path = "../common" }

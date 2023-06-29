@@ -1,3 +1,10 @@
 [workspace]
 members = ["common", "playground", "renderer"]
 resolver = "2"
+
+[workspace.dependencies]
+wgpu = "0.16.0"
+bytemuck = "1.13.1"
+log = "0.4.17"
+winit = "0.28.5"
+
