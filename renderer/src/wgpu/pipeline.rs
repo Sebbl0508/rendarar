@@ -20,6 +20,7 @@ impl RenderPipeline {
         ctx: &WgpuContext,
         shader: ShaderSource,
         buffers: &'a [wgpu::VertexBufferLayout<'a>],
+        bindgroup_layouts: &'a [&'a wgpu::BindGroupLayout],
         label: Option<&str>,
     ) -> Self {
         let shader_label = label.map(|lbl| format!("shader for pipeline {lbl}"));
@@ -35,7 +36,7 @@ impl RenderPipeline {
             .device()
             .create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
                 label: Some("render pipeline layout"),
-                bind_group_layouts: &[],
+                bind_group_layouts: bindgroup_layouts,
                 push_constant_ranges: &[],
             });
 

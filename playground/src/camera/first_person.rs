@@ -14,7 +14,8 @@ pub struct FirstPersonController {
 impl FirstPersonController {
     pub fn new(ctx: &WgpuContext, screen_size: winit::dpi::PhysicalSize<u32>) -> Self {
         let mut bundle = CameraBundle3D::new(CameraOptions3D::default(), screen_size);
-        bundle.camera.position = Point3::new(0.0, 0.0, 1.0);
+        bundle.camera.position = Point3::new(1.0, 0.0, 1.0);
+        bundle.camera.look_at(Point3::new(0.0, 0.0, 0.0));
         bundle.update();
 
         let buffer = ctx
@@ -33,6 +34,14 @@ impl FirstPersonController {
             bindgroup,
             bindgroup_layout,
         }
+    }
+
+    pub fn bindgroup(&self) -> &wgpu::BindGroup {
+        &self.bindgroup
+    }
+
+    pub fn bindgroup_layout(&self) -> &wgpu::BindGroupLayout {
+        &self.bindgroup_layout
     }
 
     pub fn create_bindgroup_and_layout(

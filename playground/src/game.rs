@@ -1,4 +1,5 @@
 use crate::camera::FirstPersonController;
+use crate::main;
 use crate::triangle::Triangle;
 use renderer::wgpu::WgpuContext;
 use std::error::Error;
@@ -21,7 +22,7 @@ impl Game {
         log::info!("initialized wgpu");
 
         let camera = FirstPersonController::new(&ctx, ctx.surface_size());
-        let triangle = Triangle::new(&ctx);
+        let triangle = Triangle::new(&ctx, camera.bindgroup_layout());
 
         Ok(Self {
             ctx,
@@ -31,6 +32,10 @@ impl Game {
             triangle,
             camera,
         })
+    }
+
+    pub fn update(&mut self) {
+        self.camera.update(&self.ctx);
     }
 
     pub fn render(&self) -> Result<(), wgpu::SurfaceError> {
@@ -73,6 +78,7 @@ impl Game {
                 }),
             });
 
+            main_pass.set_bind_group(0, self.camera.bindgroup(), &[]);
             self.triangle.render(&mut main_pass);
         }
 
@@ -116,6 +122,7 @@ impl Game {
                 Err(wgpu::SurfaceError::Timeout) => log::warn!("surface timout, ignoring..."),
             },
             Event::MainEventsCleared => {
+                self.update();
                 self.window.request_redraw();
             }
             _ => {}

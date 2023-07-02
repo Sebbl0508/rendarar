@@ -23,11 +23,12 @@ impl Triangle {
         TriangleVertex::new([ 0.5, -0.5, 0.0], [0.0; 2], [0.0, 0.0, 1.0, 1.0]),
     ];
 
-    pub fn new(ctx: &WgpuContext) -> Self {
+    pub fn new(ctx: &WgpuContext, cam_bindgroup_layout: &wgpu::BindGroupLayout) -> Self {
         let pipeline = RenderPipeline::new(
             ctx,
             ShaderSource::SourceCode(include_str!("../../resources/shaders/simple_triangle.wgsl")),
             &[TriangleVertex::desc()],
+            &[cam_bindgroup_layout],
             Some("simple triangle pipeline"),
         );
 
